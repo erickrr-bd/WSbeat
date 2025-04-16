@@ -3,6 +3,7 @@ from sys import exit
 from dataclasses import dataclass
 from libPyDialog import libPyDialog
 from .Constants_Class import Constants
+from .Pipelines_Class import Pipelines
 from libPyConfiguration import libPyConfiguration
 from libPyAgentConfiguration import libPyAgentConfiguration
 
@@ -39,6 +40,14 @@ class WSBeatTool:
 		self.switch_configuration_menu(int(option))
 
 
+	def pipelines_menu(self) -> None:
+		"""
+		Pipelines menu.
+		"""
+		option = self.dialog.create_menu("Select a option:", 13, 50, self.constants.PIPELINES_MENU_OPTIONS, "Pipelines Menu")
+		self.switch_pipelines_menu(int(option))
+
+
 	def switch_main_menu(self, option: int) -> None:
 		"""
 		Method that performs an action based on the option chosen in the "Main Menu".
@@ -50,7 +59,7 @@ class WSBeatTool:
 			case 1:
 				self.configuration_menu()
 			case 2:
-				print("Opcion 2")
+				self.pipelines_menu()
 			case 3:
 				print("Oocpion 3")
 			case 4:
@@ -67,6 +76,28 @@ class WSBeatTool:
 			option (int): Chosen option.
 		"""
 		self.define_configuration() if option == 1 else self.define_agent_configuration()
+
+
+	def switch_pipelines_menu(self, option: int) -> None:
+		"""
+		Method that executes an action based on the option chosen in the "Pipelines" menu.
+
+		Parameters:
+    		option (int): Chosen option.
+		"""
+		match option:
+			case 1:
+				self.create_pipeline()
+			case 2:
+				print("Hola")
+			case 3:
+				print("Hola")
+			case 4:
+				print("Hola")
+			case 5:
+				print("Hola")
+			case 6:
+				print("Hola")
 
 
 	def define_configuration(self) -> None:
@@ -107,6 +138,18 @@ class WSBeatTool:
 		"""
 		wsbeat_data = libPyConfiguration(self.constants.BACKTITLE)
 		wsbeat_data.display_configuration(self.constants.WSBEAT_CONFIGURATION, self.constants.LOG_FILE, self.constants.USER, self.constants.GROUP)
+
+
+	def create_pipeline(self) -> None:
+		"""
+		Method that creates a new pipeline.
+		"""
+		pipeline = Pipelines()
+		pipeline.define_name()
+		pipeline.define_index_name()
+		pipeline.define_websocket_url()
+		pipeline.define_bearer_token()
+		pipeline.create_file(pipeline.convert_object_to_dict())
 
 
 	def define_agent_configuration(self) -> None:

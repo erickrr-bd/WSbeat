@@ -64,6 +64,11 @@ class Constants:
 	CONFIGURATION_OPTIONS_TRUE: List = field(default_factory = lambda : [("Modify", "Modify the configuration file", 0), ("Display", "Display the configuration file", 0)])
 
 	"""
+	Options displayed in the "Pipelines" menu.
+	"""
+	PIPELINES_MENU_OPTIONS: List = field(default_factory = lambda : [("1", "Create pipeline"), ("2", "Modify pipeline"), ("3", "Display pipeline configuration"), ("4", "Delete pipeline(s)"), ("5", "Disable/Enable pipeline(s)"), ("6", "Display pipeline(s)")])
+
+	"""
 	Pipeline fields.
 	"""
 	PIPELINE_FIELDS: List = field(default_factory = lambda : [("Name", "Pipeline's name", 0), ("Index", "ElasticSearch's index name", 0), ("URL", "Websocket URL Connection", 0), ("Bearer Token", "Bearer Token", 0)])

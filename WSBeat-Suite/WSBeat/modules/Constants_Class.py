@@ -1,33 +1,33 @@
-"""
-Class that manages WSBeat constants.
-"""
+from dataclasses import dataclass
+
+@dataclass(frozen = True)
 class Constants:
 	"""
-	WSBeat configuration file path.
+	WSBeat configuration file.
 	"""
-	WSBEAT_CONFIGURATION_FILE = "/etc/WSBeat-Suite/WSBeat/configuration/wsbeat.yaml"
+	WSBEAT_CONFIGURATION: str = "/etc/WSBeat-Suite/WSBeat/configuration/wsbeat.yaml"
 
 	"""
-	SSL certificate folder.
+	Pipelines path.
 	"""
-	SSL_CERTIFICATE_FOLDER = "/etc/WSBeat-Suite/WSBeat/certificates"
+	PIPELINES_FOLDER: str = "/etc/WSBeat-Suite/WSBeat/pipelines"
 
 	"""
 	Encryption key path.
 	"""
-	KEY_FILE = "/etc/WSBeat-Suite/WSBeat/configuration/key"
+	KEY_FILE: str = "/etc/WSBeat-Suite/WSBeat/configuration/key"
 
 	"""
-	WSBeat's log file.
+	WSBeat-Tool log file.
 	"""
-	LOG_FILE = "/var/log/WSBeat/wsbeat-log"
+	LOG_FILE: str = "/var/log/WSBeat/wsbeat-log"
 
 	"""
 	Owner user.
 	"""
-	USER = "wsbeat_user"
+	USER: str = "wsbeat_user"
 
 	"""
 	Owner group.
 	"""
-	GROUP = "wsbeat_group"
+	GROUP: str = "wsbeat_group"

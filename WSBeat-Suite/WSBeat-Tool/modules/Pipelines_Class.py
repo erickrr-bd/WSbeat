@@ -42,7 +42,7 @@ class Pipelines:
 		"""
 		Method that defines the connection URL to the websocket.
 		"""
-		self.websocket_url = self.dialog.create_url_inputbox("Enter the URL for communication via WebSocket:", 8, 50, "wss://logs:443")
+		self.websocket_url = self.dialog.create_inputbox("Enter the URL for communication via WebSocket:", 8, 50, "wss://logs:443")
 
 
 	def define_bearer_token(self) -> None:

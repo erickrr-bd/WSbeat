@@ -1,6 +1,23 @@
 #! /bin/bash
 
+# Date: 16/04/2025
+# Author: Erick Roberto Rodriguez Rodriguez
+# Script that installs WSBeat. 
+# Create and configure all the resources necessary for its operation.
+
+# Usage: $ ./wsbeat_installer.sh
+
 clear
+
+# Function that generates a banner.
+banner()
+{
+	echo "+------------------------------------------+"
+  	printf "| %-40s |\n" "`date`"
+  	echo "|                                          |"
+  	printf "|`tput bold` %-40s `tput sgr0`|\n" "$@"
+  	echo "+------------------------------------------+"
+}
 
 WSBEAT_CONFIGURATION_FOLDER=/etc/WSBeat-Suite/WSBeat/configuration
 WSBEAT_AGENT_CONFIGURATION_FOLDER=/etc/WSBeat-Suite/WSBeat-Agent/configuration
@@ -78,23 +95,29 @@ EOF
 	#cd /opt/Telk-Alert-Suite/Telk-Alert-Tool
 	#python3 Telk_Alert_Tool.py
 elif [ $opc = "U" ] || [ $opc = "u" ]; then
-	echo -e "\e[96mStarting the Telk-Alert update\e[0m\n"
-	sleep 3
-	echo -e "\e[96mStopping and updating the Telk-Alert and Telk-Alert-Agent service\e[0m\n"
-	systemctl stop telk-alert.service
-	systemctl stop telk-alert-agent.service
-	cp telk-alert.service /etc/systemd/system/
-	cp telk-alert-agent.service /etc/systemd/system
-	systemctl daemon-reload
-	echo -e "\e[96mUpdated services\e[0m\n"
-	sleep 3
-	echo -e "\e[96mUpdating Telk-Alert\e[0m\n"
-	cp -r Telk-Alert-Suite /opt
-	chown telk_alert:telk_alert -R /opt/Telk-Alert-Suite
-	echo -e "\e[96mTelk-Alert updated\e[0m\n"
-	sleep 3
-	echo -e "\e[96mRunning Telk-Alert-Tool\e[0m\n"
-	sleep 3
-	cd /opt/Telk-Alert-Suite/Telk-Alert-Tool
-	python3.9 Telk_Alert_Tool.py
+	# Stop daemons to update WSBeat
+	banner "Stopping WSBeat and WSBeat-Agent daemons"
+	echo ''
+	systemctl stop wsbeat.service
+	#systemctl stop wsbeat-agent.service
+	echo -e "[*] \e[0;32mDemons stopped\e[0m\n"
+	# Copy new version of WSBeat
+	banner "WSBeat Update"
+	echo ''
+	cp -r WSBeat-Suite /opt
+	echo -e "[*] \e[0;32mUpdate completed\e[0m\n"
+	# Change of permissions and owner
+	banner "Change of permissions and owner"
+	echo ''
+	chown wsbeat_user:wsbeat_group -R /opt/WSBeat-Suite
+	chmod +x /opt/WSBeat-Suite/WSBeat/WSBeat.py
+	chmod +x /opt/WSBeat-Suite/WSBeat-Tool/WSBeat_Tool.py
+	#chmod +x /opt/WSBeat-Suite/WSBeat-Agent/WSBeat_Agent.py
+	echo -e "[*] \e[0;32mChanges made\e[0m\n"
+	# Start daemons
+	banner "Starting WSBeat and WSBeat-Agent daemons"
+	echo ''
+	#systemctl start wsbeat.service
+	#systemctl start wsbeat-agent.service
+	echo -e "[*] \e[0;32mDemons started\e[0m\n"
 fi
